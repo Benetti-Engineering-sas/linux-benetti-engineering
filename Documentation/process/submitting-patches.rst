@@ -602,6 +602,44 @@ process nor the requirement to Cc: stable@vger.kernel.org on all stable
 patch candidates. For more information, please read
 Documentation/process/stable-kernel-rules.rst.
 
+Using Sponsored-by:
+-------------------
+
+A Sponsored-by tag gives credit to who sponsored the creation and/or the
+upstreaming process of the patch. Sponsored-by can contain a company name or
+a physical person name. If a company sponsored the patch this is the form::
+
+	Company Name <mail@companyname.com>
+
+where the Company Name must be a valid Business Name at the time of sending the
+patch until the confirmation of the Sponsored-by tag, while the e-mail can be
+either a generic e-mail the company can be reached out or an e-mail of a person
+who has the rights inside it to confirm the Sponsored-by tag.
+
+If a physical person sponsored the patch the form must be same used in
+Signed-off-by tag::
+
+	Physical Person <physical.person@mail.com>
+
+In both cases, to prevent fake credits, either the company or the person should
+send an Acked-by tag placed right under Sponsored-by tag using the same form
+described above. So for example if the patch contains::
+
+	<changelog>
+
+	Sponsored-by: Company Name <mail@companyname.com>
+	Signed-off-by: Developer Name <developer.name@developername.com>
+
+The result including the answer from the sponsor must be::
+
+	<changelog>
+
+	Sponsored-by: Company Name <mail@companyname.com>
+	Acked-by: Company Name <mail@companyname.com>
+	Signed-off-by: Developer Name <developer.name@developername.com>
+
+This way the sponsor agrees to the usage of this tag using its name.
+
 .. _the_canonical_patch_format:
 
 The canonical patch format
