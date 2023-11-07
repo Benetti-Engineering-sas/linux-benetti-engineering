@@ -677,6 +677,8 @@ static int bcm54616s_read_status(struct phy_device *phydev)
 
 static int brcm_fet_config_init(struct phy_device *phydev)
 {
+	struct device *dev = &phydev->mdio.dev;
+	struct device_node *of_node = dev->of_node;
 	int reg, err, err2, brcmtest;
 
 	/* Reset the PHY to bring it to a known state. */
@@ -773,6 +775,19 @@ done:
 		err = err2;
 
 	phy_unlock_mdio_bus(phydev);
+
+	if (of_property_read_bool(of_node, "broadcom,mdix-force-auto")) {
+		if (phydev->phy_id == PHY_ID_BCM5221) {
+			/* Force auto MDIX */
+			err = phy_clear_bits(phydev, BCM5221_AEGSR,
+						     BCM5221_AEGSR_MDIX_MAN_SWAP |
+						     BCM5221_AEGSR_MDIX_DIS);
+			if (err < 0)
+				return err;
+
+			phydev->mdix_ctrl = ETH_TP_MDI_AUTO;
+		}
+	}
 
 	return err;
 }
